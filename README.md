@@ -1,6 +1,6 @@
 ## Setting up Debian stable for CY8CKIT-059 development
 
-### You're gonna new a bigger OpenOCD :)
+### You're gonna need a bigger OpenOCD :)
 
  * Install default openocd package
  * Pull the following from SID (via packages.debian.org/openocd)
