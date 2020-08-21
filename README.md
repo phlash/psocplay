@@ -13,4 +13,13 @@ Re-plug the devkit to ensure new udev rules are applied
 
 Use the config herin (openocd.cfg)
 
-### Toolchains: TBD
+### Toolchains: arm-none-eabi / gdb-multiarch
+
+Just install 'em :)
+
+Typical usage with gdb...
+
+```
+gdb-multiarch
+> target extended-remote |openocd -f openocd.cfg -c "gdb_port pipe; log_output /dev/null"
+```
