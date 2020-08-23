@@ -28,8 +28,9 @@ int _start() {
 }
 
 // Cortex-M3 minimal vector table - linked first due to section name :)
-void *vectors[3] __attribute__((section(".vectors"))) = {
+void *vectors[4] __attribute__((section(".vectors"))) = {
 	&__eram,	// initial stack pointer
 	_start,		// reset vector
+	_hang,		// NMI
 	_hang		// hard fault
 };
