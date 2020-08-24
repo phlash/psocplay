@@ -9,9 +9,7 @@ OBJS= $(BIN)/psocplay.o
 
 all: $(BIN) $(BIN)/psocplay.bin
 
-# Programming voodoo from: http://www.psoctools.org/psoc5lp-tools.html
 prog: all
-	openocd -f openocd.cfg -c "init; halt; psoc5lp mass_erase 0; program bin/psocplay.bin 0x0 verify reset exit"
 
 debug: all
 	gdb-multiarch $(BIN)/psocplay.elf --command gdbinit
@@ -22,8 +20,11 @@ clean:
 $(BIN):
 	mkdir -p $@
 
+# Programming voodoo from: http://www.psoctools.org/psoc5lp-tools.html
+# NB: we always program the device if rebuilding the .bin file..
 $(BIN)/psocplay.bin: $(BIN)/psocplay.elf
 	$(GCC-PREFIX)objcopy -O binary $< $@
+	openocd -f openocd.cfg -c "init; halt; psoc5lp mass_erase 0; program bin/psocplay.bin 0x0 verify reset exit"
 
 $(BIN)/psocplay.elf: $(OBJS) $(LDSCRIPT)
 	$(GCC-PREFIX)gcc -g -nostartfiles $(CFLAGS) $(LDFLAGS) -o $@ $(OBJS)
