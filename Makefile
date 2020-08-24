@@ -5,7 +5,9 @@ GCC-PREFIX= arm-none-eabi-
 CFLAGS= -mcpu=cortex-m3
 LDSCRIPT= cortex-m3.ld
 LDFLAGS= -Wl,-T,$(LDSCRIPT)
-OBJS= $(BIN)/psocplay.o
+OBJS= \
+	$(BIN)/startup.o \
+	$(BIN)/main.o
 
 all: $(BIN) $(BIN)/psocplay.bin
 
