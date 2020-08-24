@@ -23,3 +23,8 @@ Typical usage with gdb...
 gdb-multiarch
 > target extended-remote |openocd -f openocd.cfg -c "gdb_port pipe; log_output /dev/null"
 ```
+
+### Makefile targets
+
+The usual suspects: `all`, `clean` plus a couple of typing savers: `prog` to program the target
+and `debug` to fire up gdb as above with source level debugging ready to roll :)
