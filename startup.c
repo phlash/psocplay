@@ -27,7 +27,8 @@ static void *__romvectors[NROMVECT] __attribute__((section(".romvectors"))) = {
 
 // what it says..
 void _hang() {
-	while(1);
+	while(1)
+		__asm("wfi");	// save some power while we wait..
 }
 
 // default exception handler, go _hang!
@@ -35,7 +36,7 @@ void _except() {
 	_hang();
 }
 
-// our entry point (see below)
+// our entry point (see above)
 void _start() {
 	// grab reset registers (4x8bit)
 	uint32_t reset = *(uint32_t*)(CYREG_RESET_SR0);
