@@ -14,15 +14,15 @@ static int var_in_data=0x1234;
 static int var_in_bss;
 
 // Cortex-M3 minimal ROM vector table - section name ensures link address is correct (0x0)
-void _hang();
+void _except();
 void _start();
 #define NROMVECT 4
 #define NRAMVECT 48
 static void *__romvectors[NROMVECT] __attribute__((section(".romvectors"))) = {
 	&__eram,	// initial stack pointer
 	_start,		// reset vector
-	_hang,		// NMI
-	_hang		// hard fault
+	_except,	// NMI
+	_except		// hard fault
 };
 
 // what it says..
