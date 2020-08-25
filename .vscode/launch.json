@@ -9,7 +9,7 @@
             // @see https://github.com/Marus/cortex-debug/blob/bed1a5f92669c7b21e2bb61940af6a181267cede/src/gdb.ts#270
             "name": "(gdb) Cortex-debug",
             "type": "cortex-debug",
-            "request": "attach",
+            "request": "launch",
             "servertype": "openocd",
             "gdbpath": "/usr/bin/gdb-multiarch",
             "cwd": "${workspaceFolder}",
