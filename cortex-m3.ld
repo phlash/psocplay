@@ -10,14 +10,16 @@ MEMORY {
 }
 
 SECTIONS {
-	/* vector tables go first, then .text* segments */
-	.text : { *(.vector*); *(.text*); } >FLASH
-	/* now read-only data which stays in FLASH */
+	/* ROM vector tables go first, then .text* segments */
+	.text : { *(.romvector*); *(.text*); } >FLASH
+	/* read-only data which stays in FLASH */
 	.rodata : { *(.rodata*); __etext = .; } >FLASH
-	/* now declared data that needs to be copied out to RAM from FLASH */
+	/* declared data that needs to be copied out to DATARAM from FLASH */
 	.data : { __sdata = .; *(.data*); __edata = .; } >DATARAM AT>FLASH
 	/* finally undeclared data that needs to be zeroed for C */
 	.bss : { __sbss = .; *(.bss*); __ebss = .; } >DATARAM
+	/* symbol for RAM vector table at base of CODERAM */
+	__ramvectors = ORIGIN(CODERAM);
 	/* symbol for end of RAM */
 	__eram = ORIGIN(DATARAM) + LENGTH(DATARAM);
 }
