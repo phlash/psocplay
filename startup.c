@@ -3,15 +3,10 @@
 #include <stdint.h>
 
 // symbols from ldscript
-extern char __etext, __sdata, __edata, __sbss, __ebss, __ramvectors, __eram;
+extern char __etext, __sdata, __edata, __sbss, __ebss, __sheap, __eheap, __eram, __ramvectors;
 
 // expected app entry point
 extern void main(uint32_t reset);
-
-// test variables in different sections
-const static int var_in_rodata=0x9876;
-static int var_in_data=0x1234;
-static int var_in_bss;
 
 // Cortex-M3 minimal ROM vector table - section name ensures link address is correct (0x0)
 void _except();
@@ -19,7 +14,7 @@ void _start();
 #define NROMVECT 4
 #define NRAMVECT 48
 static void *__romvectors[NROMVECT] __attribute__((section(".romvectors"))) = {
-	&__eram,	// initial stack pointer
+	&__sheap,	// initial stack pointer (below heap)
 	_start,		// reset vector
 	_except,	// NMI
 	_except		// hard fault
@@ -59,4 +54,11 @@ void _start() {
 	main(reset);
 	// hang for now... TBD
 	_hang();
+}
+
+// set an exception vector in RAM
+void _setvector(int num, void *value) {
+	void **ramv = (void**)&__ramvectors;
+	if (num<NRAMVECT)
+		ramv[num] = value;
 }

@@ -7,7 +7,24 @@
         {
             // config using Cortex-debug extension, NB: gdbpath (undocumented) required to use gdb-multiarch
             // @see https://github.com/Marus/cortex-debug/blob/bed1a5f92669c7b21e2bb61940af6a181267cede/src/gdb.ts#270
-            "name": "(gdb) Cortex-debug",
+            "name": "(gdb) rtos",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "gdbpath": "/usr/bin/gdb-multiarch",
+            "cwd": "${workspaceFolder}",
+            "cpu": "cortex-m3",
+            "configFiles": [ "openocd.cfg" ],
+            "showDevDebugOutput": false,
+
+            // always build first (this may also program the device)
+            "preLaunchTask": "${defaultBuildTask}",
+            "executable": "bin/rtos.elf"
+        },
+        {
+            // config using Cortex-debug extension, NB: gdbpath (undocumented) required to use gdb-multiarch
+            // @see https://github.com/Marus/cortex-debug/blob/bed1a5f92669c7b21e2bb61940af6a181267cede/src/gdb.ts#270
+            "name": "(gdb) psocplay",
             "type": "cortex-debug",
             "request": "launch",
             "servertype": "openocd",
@@ -20,6 +37,6 @@
             // always build first (this may also program the device)
             "preLaunchTask": "${defaultBuildTask}",
             "executable": "bin/psocplay.elf"
-        }        
+        }
     ]
 }

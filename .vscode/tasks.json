@@ -3,10 +3,46 @@
 	"tasks": [
 		{
 			"type": "shell",
-			"label": "Existing Makefile",
+			"label": "Make clean",
 			"command": "make",
 			"args": [
-				"prog"
+				"clean"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": false
+			}
+		},
+		{
+			"type": "shell",
+			"label": "Make all",
+			"command": "make",
+			"args": [
+				"all"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": false
+			}
+		},
+		{
+			"type": "shell",
+			"label": "Make rtos",
+			"command": "make",
+			"args": [
+				"rtos"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"

@@ -1,6 +1,11 @@
 #include "cydevice_trm.h"
 #include <stdint.h>
 
+// Test symbols in different storage
+static const int var_rodata = 0xDEADBEEF;
+static int var_data  = 0xFEEDF00D;
+static int var_bss;
+
 void main(uint32_t reset) {
     // TBD - initialise the many registers and peripherals we may need...
     // for now: blink the LED ;)
