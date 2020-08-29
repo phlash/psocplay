@@ -14,19 +14,33 @@ void vApplicationStackOverflowHook(TaskHandle_t tHnd, char *tName) { _hang(); }
 void vApplicationMallocFailedHook(void) { _hang(); }
 
 // idle task hook
-void vApplicationIdleHook(void) {}
+static uint32_t idleCnt;
+void vApplicationIdleHook(void) { ++idleCnt; }
 // sys tick hook
 static volatile int hookSaysNo;
-static int ticks;
 void vApplicationTickHook(void) {
-	// stop wiggling every 5 secs, for 5secs
-	if ((++ticks)%5000==0)
+	static TickType_t last;
+	static uint32_t calls;
+	TickType_t now=xTaskGetTickCount();
+	++calls;
+	// toggle wiggling every 5 secs, for 5secs
+	if (now>(last+5000)) {
+		last = now;
 		hookSaysNo = ~hookSaysNo;
+	}
 }
 
-// dummy stats timer (high resolution timer) - intending to read systick downcounter..
+// stats timer (high resolution timer)
 void vApplicationConfigStatsTimer(void) {}
-unsigned long vApplicationGetStatsTimer(void) { return 0L; }
+unsigned long vApplicationGetStatsTimer(void) {
+	// use systick counter value (@CPU clock rate), critical section to ensure atomicity
+	taskENTER_CRITICAL();
+	uint32_t systick = *(uint32_t*)(CYREG_NVIC_SYSTICK_CURRENT);
+	TickType_t ticks = xTaskGetTickCount();
+	taskEXIT_CRITICAL();
+	uint32_t sysload = *(uint32_t*)(CYREG_NVIC_SYSTICK_RELOAD);
+	return (ticks*sysload)+(sysload-systick);
+}
 
 // exception handlers in the CM3 port and where they go..
 extern void xPortPendSVHandler(void);

@@ -94,6 +94,8 @@
 #define configTICK_RATE_HZ   ( ( TickType_t ) 1000 )
 // no software timers, we have hardware and tick hooks
 #define configUSE_TIMERS     0
+// low power (disables ticks, waits for interrupts) if nothing to run..
+#define configUSE_TICKLESS_IDLE 1
 
 // --SCHEDULING--
 // port specific task selection as we have it (faster)
@@ -125,7 +127,7 @@ extern void vApplicationConfigStatsTimer(void);
 extern unsigned long vApplicationGetStatsTimer(void);
 #define portGET_RUN_TIME_COUNTER_VALUE() vApplicationGetStatsTimer()
 // pretty printing tasks.. sadly depends on sprintf() which b0rks stuff
-//#define configUSE_TRACE_FACILITY    1
+#define configUSE_TRACE_FACILITY    1
 //#define configUSE_STATS_FORMATTING_FUNCTIONS 1
 
 // --SYNCHRONISATION--
