@@ -28,3 +28,14 @@ gdb-multiarch
 
 The usual suspects: `all`, `clean` plus a couple of typing savers: `prog` to program the target
 and `debug` to fire up gdb as above with source level debugging ready to roll :)
+
+### Going all GUI
+
+I'm using Visual Studio Code, from the official repo:
+```
+/etc/apt/sources.list.d/vscode.list:
+deb [arch=amd64] https://packages.microsoft.com/repos/vscode buster main
+```
+Add the Cortex-Debug extension from the Marketplace, as the default gdb support makes poor assumptions..
+
+Load this folder, hit Ctrl-Shift-B and watch `make` do it's magic, or hit F5 and be impressed ;)
