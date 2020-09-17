@@ -3,7 +3,7 @@
 #include <task.h>
 
 // vector stuff in startup.c
-extern void _setvector(int num, void *value);
+extern void *_setvector(int num, void *value);
 
 // define the allocation heap in special section
 uint8_t ucHeap[ configTOTAL_HEAP_SIZE ] __attribute((section(".heap")));

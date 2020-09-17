@@ -28,6 +28,8 @@ void _hang() {
 
 // default exception handler, go _hang!
 void _except() {
+	// grab exception number for debugger
+	uint8_t exno = (uint8_t)(*(uint32_t*)(CYREG_NVIC_INTR_CTRL_STATE));
 	_hang();
 }
 
@@ -57,8 +59,12 @@ void _start() {
 }
 
 // set an exception vector in RAM
-void _setvector(int num, void *value) {
+void *_setvector(int num, void *value) {
 	void **ramv = (void**)&__ramvectors;
-	if (num<NRAMVECT)
+	void *prev = (void *)0;
+	if (num<NRAMVECT) {
+		prev = ramv[num];
 		ramv[num] = value;
+	}
+	return prev;
 }
