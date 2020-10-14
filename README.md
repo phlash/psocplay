@@ -34,7 +34,7 @@ and `debug` to fire up gdb as above with source level debugging ready to roll :)
 I'm using Visual Studio Code, from the official repo:
 ```
 /etc/apt/sources.list.d/vscode.list:
-deb [arch=amd64] https://packages.microsoft.com/repos/vscode buster main
+deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
 ```
 Add the Cortex-Debug extension from the Marketplace, as the default gdb support makes poor assumptions..
 
